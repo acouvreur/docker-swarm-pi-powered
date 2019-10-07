@@ -1,0 +1,78 @@
+
+version: "3.7"
+
+services:
+
+  #----------------------------------------------#
+  # Telegraf : data collector
+  #----------------------------------------------#
+  telegraf:
+    image: telegraf:latest
+    hostname: "{{.Node.Hostname}}"
+    networks:
+      - traefik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /sys:/hostfs/sys:ro
+      - /proc:/hostfs/proc:ro
+      - /etc:/hostfs/etc:ro
+    environment:
+      - HOST_ETC=/hostfs/etc
+      - HOST_PROC=/hostfs/proc
+      - HOST_SYS=/hostfs/sys
+      - HOST_MOUNT_PREFIX=/hostfs
+    configs:
+      - source: telegraf.conf
+        target: /etc/telegraf/telegraf.conf
+    deploy:
+      mode: global
+
+  #----------------------------------------------#
+  # InfluxDB : time series database
+  #----------------------------------------------#
+  influxdb:
+    image: influxdb:latest
+    networks:
+      - traefik
+    configs:
+      - source: influxdb.conf
+        target: /etc/influxdb/influxdb.conf
+    volumes:
+      - influxdb_data:/var/lib/influxdb
+
+  #----------------------------------------------#
+  # Grafana : analytics and monitoring
+  #----------------------------------------------#
+  grafana:
+    image: "grafana/grafana"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - TZ=${TZ}
+      - GF_SERVER_ROOT_URL=https://grafana.${DOMAINNAME}/
+    networks:
+      - traefik
+    deploy:
+      labels:
+        - traefik.http.routers.grafana.rule=Host(`grafana.${DOMAINNAME}`)
+        - traefik.http.services.grafana-service.loadbalancer.server.port=3000
+        - traefik.http.routers.api.middlewares=default-auth
+        - "traefik.enable=true"
+
+configs:
+  influxdb.conf:
+    file: ./influxdb/influxdb.conf
+  telegraf.conf:
+    file: ./telegraf/telegraf.conf
+
+volumes:
+  influxdb_data:
+    driver: convoy
+  grafana_data:
+    driver: convoy
+
+networks:
+  traefik_proxy_swarm:
+    driver: overlay
+    external:
+      name: ${TRAEFIK_NETWORK}

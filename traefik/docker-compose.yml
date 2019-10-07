@@ -1,0 +1,41 @@
+version: "3.7"
+
+services:
+
+  #-------------------------------------#
+  # Traefik : reverse proxy with HTTPS
+  #-------------------------------------#
+  traefik:
+    hostname: traefik
+    image: traefik:latest
+    networks:
+      - traefik
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+    # You can pass environment variables from your shell straight through to a service’s containers
+    # with the ‘environment’ key by not giving them a value, just like with docker run -e VARIABLE ...
+      - OVH_ENDPOINT
+      - OVH_APPLICATION_KEY
+      - OVH_APPLICATION_SECRET
+      - OVH_CONSUMER_KEY
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - $PWD/traefik:/etc/traefik
+    deploy:
+      labels:
+        - "traefik.http.routers.api.rule=Host(`traefik.${DOMAINNAME}`)"
+        - "traefik.http.routers.api.entrypoints=https"
+        - "traefik.http.routers.api.service=api@internal"
+        - "traefik.http.routers.api.middlewares=default-auth"
+        - "traefik.http.routers.api.tls"
+      replicas: 1
+      placement:
+        constraints: [node.role==manager]
+
+networks:
+  traefik:
+    driver: overlay
+    external:
+      name: ${TRAEFIK_NETWORK}

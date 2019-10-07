@@ -1,0 +1,44 @@
+
+# Docker Swarm configuration
+[providers.docker]
+  endpoint = "tcp://127.0.0.1:2377"
+  swarmMode = true
+
+# Entry Points
+[entryPoints]
+  # Default HTTP over :80
+  [entryPoints.http]
+  address = ":80"
+
+  # HTTPS Entrypoint
+  [entryPoints.https]
+  address = ":443"
+
+# Certificate resolver through HTTP Challenge
+# OVH Providers needs these variables :
+#   - OVH_ENDPOINT
+#   - OVH_APPLICATION_KEY
+#   - OVH_APPLICATION_SECRET
+#   - OVH_CONSUMER_KEY
+[certificatesResolvers.ovh.acme]
+  email = "alexiscouvreur.pro@gmail.com"
+  storage = "acme.json"
+  [certificatesResolvers.ovh.acme.dnsChallenge]
+    provider = "ovh"
+    delayBeforeCheck = 0
+
+[log]
+  level = "DEBUG"
+  format = "json"
+
+[global]
+  checkNewVersion = true
+
+# Defines all middlewares to be used by services
+[http.middlewares]
+  [http.middlewares.default-auth.basicAuth]
+    usersFile = "/etc/traefik/.htpasswd"
+
+
+[metrics]
+  [metrics.influxDB]

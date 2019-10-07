@@ -1,0 +1,185 @@
+version: "3.7"
+
+services:
+
+  #----------------------------------------------#
+  # Pi-hole : dns wide blocking ads
+  #----------------------------------------------#
+  # pihole:
+  #   hostname: pihole
+  #   image: pihole/pihole:latest
+  #   ports:
+  #     - '53:53/tcp'
+  #     - '53:53/udp'
+  #     - '67:67/udp'
+  #     - '8182:80'
+  #     - '8183:443'
+  #   volumes:
+  #     - ${USERDIR}/docker/pihole/pihole:/etc/pihole
+  #     - ${USERDIR}/docker/pihole/pihole.log:/var/log/pihole.log
+  #     - ${USERDIR}/docker/pihole/dnsmasq.d:/etc/dnsmasq.d
+  #   networks:
+  #     - traefik_proxy_swarm
+  #   dns:
+  #     # - 127.0.0.1
+  #     - 9.9.9.9
+  #   environment:
+  #     - ServerIP=${SERVER_IP}
+  #     - PROXY_LOCATION=pihole
+  #     - VIRTUAL_HOST=pihole.${DOMAINNAME}
+  #     - VIRTUAL_PORT=80
+  #     - TZ=${TZ}
+  #   deploy:
+  #     labels:
+  #       - "traefik.enable=true"
+  #       - "traefik.backend=hole"
+  #       - "traefik.port=80"
+  #       - "traefik.frontend.rule=HostRegexp:pihole.${DOMAINNAME},{catchall:.*}"
+  #       - "traefik.frontend.priority=1"
+  #       - traefik.frontend.headers.SSLRedirect=true
+  #       - traefik.frontend.headers.STSSeconds=315360000
+  #       - traefik.frontend.headers.browserXSSFilter=true
+  #       - traefik.frontend.headers.contentTypeNosniff=true
+  #       - traefik.frontend.headers.forceSTSHeader=true
+  #       - traefik.frontend.headers.SSLHost=${DOMAINNAME}
+  #       - traefik.frontend.headers.STSIncludeSubdomains=true
+  #       - traefik.frontend.headers.STSPreload=true
+  #       - traefik.frontend.headers.frameDeny=true
+  #       - "traefik.frontend.auth.basic.usersFile=/shared/.htpasswd"
+  #     replicas: 1
+  #     placement:
+  #       constraints:
+  #         - node.labels.pihole == true
+
+
+  #--------------------------#
+  # Personal website
+  #--------------------------#
+  my-website:
+    image: acouvreur/my-website
+    environment:
+      - TZ=${TZ}
+    networks:
+      - traefik
+    deploy:
+      labels:
+        - traefik.http.routers.transmission.rule=Host(`www.${DOMAINNAME}`)
+        - traefik.http.services.transmission-service.loadbalancer.server.port=9091
+
+  #---------------------------------------#
+  # Portainer : container management tool
+  #---------------------------------------#
+  # portainer:
+  #   image: portainer/portainer
+  #   command: -H unix:///var/run/docker.sock
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - ${USERDIR}/docker/portainer/data:/data
+  #   environment:
+  #     - TZ=${TZ}
+  #   networks:
+  #     - traefik_proxy_swarm
+  #   deploy:
+  #     labels:
+  #       - "traefik.enable=true"
+  #       - "traefik.backend=portainer"
+  #       - "traefik.frontend.rule=Host:portainer.${DOMAINNAME}"
+  #       - "traefik.port=9000"
+  #       - "traefik.docker.network=traefik_proxy_swarm"
+  #       - "traefik.frontend.headers.SSLRedirect=true"
+  #       - "traefik.frontend.headers.STSSeconds=315360000"
+  #       - "traefik.frontend.headers.browserXSSFilter=true"
+  #       - "traefik.frontend.headers.contentTypeNosniff=true"
+  #       - "traefik.frontend.headers.forceSTSHeader=true"
+  #       - "traefik.frontend.headers.SSLHost=${DOMAINNAME}"
+  #       - "traefik.frontend.headers.STSIncludeSubdomains=true"
+  #       - "traefik.frontend.headers.STSPreload=true"
+  #       - "traefik.frontend.headers.frameDeny=true"
+  #     replicas: 1
+  #     placement:
+  #       constraints:
+  #         - node.labels.portainer == true
+
+  #---------------------------------------#
+  # Plex Media Server
+  #---------------------------------------#
+  # plexms:
+  #   image: linuxserver/plex
+  #   volumes:
+  #     - ${PIDRIVE}/plexms:/config
+  #     - ${PIDRIVE}/media/movies:/data/movies
+  #     - ${PIDRIVE}/media/tvshows:/data/tvshows
+  #     - /media/media:/media
+  #     - ${USERDIR}/docker/shared:/shared
+  #   ports:
+  #     - "32400:32400/tcp"
+  #     - "3005:3005/tcp"
+  #     - "8324:8324/tcp"
+  #     - "32469:32469/tcp"
+  #     - "1900:1900/udp"
+  #     - "32410:32410/udp"
+  #     - "32412:32412/udp"
+  #     - "32413:32413/udp"
+  #     - "32414:32414/udp"
+  #   environment:
+  #     - TZ=${TZ}
+  #     - PUID=${PUID}
+  #     - PGID=${PGID}
+  #     - VERSION=docker
+  #     - PLEX_CLAIM=${PLEX_CLAIM}
+  #   networks:
+  #     - traefik_proxy_swarm
+  #   deploy:
+  #     labels:
+  #       - "traefik.enable=true"
+  #       - "traefik.backend=plexms"
+  #       - "traefik.frontend.rule=Host:plex.${DOMAINNAME}"
+  #       - "traefik.port=32400"
+  #       - "traefik.protocol=http"
+  #       - "traefik.docker.network=traefik_proxy_swarm"
+  #       - "traefik.frontend.headers.SSLRedirect=true"
+  #       - "traefik.frontend.headers.STSSeconds=315360000"
+  #       - "traefik.frontend.headers.browserXSSFilter=true"
+  #       - "traefik.frontend.headers.contentTypeNosniff=true"
+  #       - "traefik.frontend.headers.forceSTSHeader=true"
+  #       - "traefik.frontend.headers.SSLHost=example.com"
+  #       - "traefik.frontend.headers.STSIncludeSubdomains=true"
+  #       - "traefik.frontend.headers.STSPreload=true"
+  #       - "traefik.frontend.headers.frameDeny=true"
+  #     replicas: 1
+  #     placement:
+  #       constraints:
+  #         - node.labels.hdd == true
+
+  #---------------------------------------#
+  # Open VPN Server
+  #---------------------------------------#
+  openvpn-as:
+    image: linuxserver/openvpn-as
+    container_name: openvpn-as
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - INTERFACE=eth0 #optional
+    volumes:
+      - openvpn_config:/config
+    ports:
+      - 1194:1194/udp
+    restart: unless-stopped
+    networks:
+      - traefik
+    deploy:
+      labels:
+        - traefik.http.routers.vpn.rule=Host(`vpn.${DOMAINNAME}`)
+        - traefik.http.services.vpn-service.loadbalancer.server.port=943
+        - traefik.http.routers.api.middlewares=default-auth
+        - "traefik.enable=true"
+
+networks:
+  traefik:
+    driver: overlay
+    external:
+      name: ${TRAEFIK_NETWORK}
