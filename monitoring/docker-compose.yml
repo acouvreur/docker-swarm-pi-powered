@@ -72,7 +72,6 @@ volumes:
     driver: convoy
 
 networks:
-  traefik_proxy_swarm:
-    driver: overlay
-    external:
-      name: ${TRAEFIK_NETWORK}
+  traefik:
+    external: true
+    name: ${TRAEFIK_NETWORK}
