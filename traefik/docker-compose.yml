@@ -22,7 +22,7 @@ services:
       - OVH_CONSUMER_KEY
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - $PWD/traefik:/etc/traefik
+      - $PWD:/etc/traefik
     deploy:
       labels:
         - "traefik.http.routers.api.rule=Host(`traefik.${DOMAINNAME}`)"
@@ -37,5 +37,4 @@ services:
 networks:
   traefik:
     driver: overlay
-    external:
       name: ${TRAEFIK_NETWORK}
