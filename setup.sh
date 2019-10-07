@@ -7,7 +7,7 @@ export PUID=1000 # User ID to set inside the containers
 export PGID=1000 # Group ID to set inside the containers
 # Avoid right issues on shared folder within containers
 export TZ="Europe/Paris"
-export DOMAINNAME="alexiscouvreur.fr"   # Configure top level domain name every exposed containers
+# export DOMAINNAME=""   # Configure top level domain name every exposed containers
                                         # will be available at something.${DOMAINNAME}
 
 # OVH Configuration to DNS Challenge a wildcard domain to Let's Encrypt with Traefik
