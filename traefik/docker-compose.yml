@@ -36,5 +36,5 @@ services:
 
 networks:
   traefik:
-    driver: overlay
-      name: ${TRAEFIK_NETWORK}
+    external: true
+    name: ${TRAEFIK_NETWORK}

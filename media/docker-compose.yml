@@ -86,9 +86,8 @@ services:
 
 networks:
   traefik:
-    driver: overlay
-    external:
-      name: ${TRAEFIK_NETWORK}
+    external: true
+    name: ${TRAEFIK_NETWORK}
 
 volumes:
   jackett_data:
