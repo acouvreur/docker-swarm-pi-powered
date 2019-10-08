@@ -23,7 +23,7 @@
 #   - OVH_CONSUMER_KEY
 [certificatesResolvers.ovh.acme]
   email = "alexiscouvreur.pro@gmail.com"
-  storage = "acme.json"
+  storage = "/etc/traefik/acme/acme.json"
   [certificatesResolvers.ovh.acme.dnsChallenge]
     provider = "ovh"
     delayBeforeCheck = 0
