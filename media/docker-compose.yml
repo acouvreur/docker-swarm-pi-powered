@@ -41,8 +41,8 @@ services:
     deploy:
       labels:
         - traefik.http.routers.transmission.rule=Host(`transmission.${DOMAINNAME}`)
+        - traefik.http.routers.transmission.middlewares=default-auth
         - traefik.http.services.transmission-service.loadbalancer.server.port=9091
-        - traefik.http.routers.api.middlewares=default-auth
 
   #-------------------------------------#
   # Sonarr : tvshow manager
