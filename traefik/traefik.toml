@@ -1,7 +1,8 @@
 
 # Docker Swarm configuration
 [providers.docker]
-  endpoint = "tcp://127.0.0.1:2377"
+  # endpoint = "tcp://127.0.0.1:2377"
+  endpoint = "unix:///var/run/docker.sock"
   swarmMode = true
 
 # Entry Points

@@ -175,7 +175,7 @@ services:
       labels:
         - traefik.http.routers.vpn.rule=Host(`vpn.${DOMAINNAME}`)
         - traefik.http.services.vpn-service.loadbalancer.server.port=943
-        - traefik.http.routers.api.middlewares=default-auth
+        - traefik.http.routers.vpn.middlewares=default-auth
         - "traefik.enable=true"
 
 networks:
