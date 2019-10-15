@@ -1,7 +1,8 @@
 
 # Docker Swarm configuration
 [providers.docker]
-  endpoint = "tcp://127.0.0.1:2377"
+  # endpoint = "tcp://127.0.0.1:2377"
+  endpoint = "unix:///var/run/docker.sock"
   swarmMode = true
 
 [api]
@@ -24,7 +25,7 @@
 #   - OVH_CONSUMER_KEY
 [certificatesResolvers.ovh.acme]
   email = "alexiscouvreur.pro@gmail.com"
-  storage = "acme.json"
+  storage = "/etc/traefik/acme/acme.json"
   [certificatesResolvers.ovh.acme.dnsChallenge]
     provider = "ovh"
     delayBeforeCheck = 0
