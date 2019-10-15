@@ -56,7 +56,7 @@ services:
       labels:
         - traefik.http.routers.grafana.rule=Host(`grafana.${DOMAINNAME}`)
         - traefik.http.services.grafana-service.loadbalancer.server.port=3000
-        - traefik.http.routers.api.middlewares=default-auth
+        - traefik.http.routers.grafana.middlewares=default-auth
         - "traefik.enable=true"
 
 configs:
