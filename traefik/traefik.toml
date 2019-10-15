@@ -4,6 +4,8 @@
   endpoint = "tcp://127.0.0.1:2377"
   swarmMode = true
 
+[api]
+
 # Entry Points
 [entryPoints]
   # Default HTTP over :80
@@ -38,7 +40,15 @@
 [http.middlewares]
   [http.middlewares.default-auth.basicAuth]
     usersFile = "/etc/traefik/.htpasswd"
+  [http.middlewares.redirect-to-https.redirectscheme]
+    scheme = "https"
 
+[http.routers]
+  # HTTP to HTTPS redirection
+  [http.routers.redirs]
+    rule = "hostregexp(`{host:.+}`)"
+    entrypoints = "http"
+    middlewares = "redirect-to-https"
 
 [metrics]
   [metrics.influxDB]
