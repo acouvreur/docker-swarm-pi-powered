@@ -45,6 +45,7 @@ services:
       - traefik
     deploy:
       labels:
+        - traefik.enable=true
         - traefik.http.routers.transmission.rule=Host(`transmission.${DOMAINNAME}`)
         - traefik.http.routers.transmission.entrypoints=https
         - traefik.http.routers.transmission.tls.domains[0].main=${DOMAINNAME}
@@ -70,6 +71,7 @@ services:
       - traefik
     deploy:
       labels:
+        - traefik.enable=true
         - traefik.http.routers.sonarr.rule=Host(`sonarr.${DOMAINNAME}`)
         - traefik.http.routers.sonarr.entrypoints=https
         - traefik.http.routers.sonarr.tls.domains[0].main=${DOMAINNAME}
@@ -94,6 +96,7 @@ services:
       - traefik
     deploy:
       labels:
+        - traefik.enable=true
         - traefik.http.routers.radarr.rule=Host(`radarr.${DOMAINNAME}`)
         - traefik.http.routers.radarr.entrypoints=https
         - traefik.http.routers.radarr.tls.domains[0].main=${DOMAINNAME}
