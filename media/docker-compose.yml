@@ -91,16 +91,30 @@ networks:
 
 volumes:
   jackett_data:
-    driver: convoy
+    driver: nfs
+    driver_opts:
+      share: ${MASTER_IP}${CONFIGNFS}/media/jackett
   transmission_config:
-    driver: convoy
+    driver: nfs
+    driver_opts:
+      share: ${MASTER_IP}${CONFIGNFS}/media/transmission
   radarr_config:
-    driver: convoy
+    driver: nfs
+    driver_opts:
+      share: ${MASTER_IP}${CONFIGNFS}/media/radarr
   sonarr_config:
-    driver: convoy
+    driver: nfs
+    driver_opts:
+      share: ${MASTER_IP}${CONFIGNFS}/media/sonarr
   transmission_data:
-    driver: convoy
+    driver: nfs
+    driver_opts:
+      share: ${MASTER_IP}${PIDRIVE}/media/downloads
   movies:
-    driver: convoy
+    driver: nfs
+    driver_opts:
+      share: ${MASTER_IP}${PIDRIVE}/media/movies
   tvshows:
-    driver: convoy
+    driver: nfs
+    driver_opts:
+      share: ${MASTER_IP}${PIDRIVE}/media/tvshows
