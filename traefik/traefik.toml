@@ -27,6 +27,7 @@
 #   - OVH_APPLICATION_SECRET
 #   - OVH_CONSUMER_KEY
 [certificatesResolvers.ovh.acme]
+  dnsChallenge = true
   email = "alexiscouvreur.pro@gmail.com"
   storage = "/etc/traefik/acme/acme.json"
   [certificatesResolvers.ovh.acme.dnsChallenge]
@@ -34,7 +35,7 @@
     delayBeforeCheck = 0
 
 [log]
-  level = "DEBUG"
+  level = "INFO"
   format = "json"
 
 [global]
@@ -56,3 +57,6 @@
 
 [metrics]
   [metrics.influxDB]
+    address = "influxdb:8086"
+    protocol = "http"
+    database = "telegraf"
