@@ -45,6 +45,7 @@ services:
   #----------------------------------------------#
   grafana:
     image: "grafana/grafana"
+    user: ${PUID}
     volumes:
       - grafana_data:/var/lib/grafana
     environment:
