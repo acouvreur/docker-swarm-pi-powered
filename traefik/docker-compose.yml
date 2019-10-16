@@ -31,7 +31,7 @@ services:
         - traefik.http.routers.traefik.rule=Host(`traefik.${DOMAINNAME}`)
         - traefik.http.routers.traefik.service=api@internal
         - traefik.http.routers.traefik.entrypoints=https
-        - traefik.http.routers.traefik.middlewares=default-auth
+        - traefik.http.routers.traefik.middlewares=default-auth@file
         - traefik.http.routers.traefik.tls.domains[0].main=${DOMAINNAME}
         - traefik.http.routers.traefik.tls.domains[0].sans=*.${DOMAINNAME}
         - traefik.http.routers.traefik.tls.certresolver=ovh
