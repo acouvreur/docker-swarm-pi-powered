@@ -55,8 +55,8 @@ services:
     deploy:
       labels:
         - traefik.http.routers.grafana.rule=Host(`grafana.${DOMAINNAME}`)
-        - traefik.http.services.grafana-service.loadbalancer.server.port=3000
         - traefik.http.routers.grafana.middlewares=default-auth
+        - traefik.http.services.grafana-service.loadbalancer.server.port=3000
         - traefik.enable=true
 
 configs:
@@ -67,11 +67,15 @@ configs:
 
 volumes:
   influxdb_data:
-    driver: convoy
+    driver: nfs
+    driver_opts:
+      share: ${MASTER_IP}${PIDRIVE}/monitoring/influxdb
   grafana_data:
-    driver: convoy
+    driver: nfs
+    driver_opts:
+      share: ${MASTER_IP}${PIDRIVE}/monitoring/grafana
 
 networks:
   traefik:
     external: true
-    name: ${TRAEFIK_NETWORK}
+    name: traefik
