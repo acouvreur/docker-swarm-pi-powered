@@ -39,10 +39,10 @@ I need high speed between HDD <-> Pi <-> Ethernet, so try to reduce bottleneck.
 
 Drive is on RPi4, NFS mounted on other Pi.
 
-|                            | RPi 4    | RPi 3B+  | RPi 3B   |
-| -------------------------- | -------- | -------- | -------- |
-| Seq Write Speed (1000 MiB) | 24 MiB/s | 30 MiB/s | 11 MiB/s |
-| Seq Read Speed (1000 MiB)  | 52 MiB/s | 40 MiB/s | 11 MiB/s |
+|                            | RPi 4 | RPi 3B+  | RPi 3B   |
+| -------------------------- | ----- | -------- | -------- |
+| Seq Write Speed (1000 MiB) | --    | 30 MiB/s | 11 MiB/s |
+| Seq Read Speed (1000 MiB)  | --    | 40 MiB/s | 11 MiB/s |
 
 RPi3 Ethernet port is 100 Mbps which is ~11MiB/s so this is accurate.
 
