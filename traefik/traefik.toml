@@ -27,6 +27,7 @@
 #   - OVH_APPLICATION_SECRET
 #   - OVH_CONSUMER_KEY
 [certificatesResolvers.ovh.acme]
+  dnsChallenge = true
   email = "alexiscouvreur.pro@gmail.com"
   storage = "/etc/traefik/acme/acme.json"
   [certificatesResolvers.ovh.acme.dnsChallenge]

@@ -63,8 +63,11 @@ services:
       - traefik
     deploy:
       labels:
-        - traefik.http.routers.transmission.rule=Host(`www.${DOMAINNAME}`)
-        - traefik.http.services.transmission-service.loadbalancer.server.port=9091
+        - traefik.enable=true
+        - traefik.http.routers.my-website.rule=Host(`www.${DOMAINNAME}`)
+        - traefik.http.routers.my-website.entrypoints=https
+        - traefik.http.routers.my-website.tls.certresolver=ovh
+        - traefik.http.services.my-website.loadbalancer.server.port=1337
 
   #---------------------------------------#
   # Portainer : container management tool
@@ -154,29 +157,29 @@ services:
   #---------------------------------------#
   # Open VPN Server
   #---------------------------------------#
-  openvpn-as:
-    image: linuxserver/openvpn-as
-    container_name: openvpn-as
-    cap_add:
-      - NET_ADMIN
-    environment:
-      - TZ=${TZ}
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - INTERFACE=eth0 #optional
-    volumes:
-      - openvpn_config:/config
-    ports:
-      - 1194:1194/udp
-    restart: unless-stopped
-    networks:
-      - traefik
-    deploy:
-      labels:
-        - traefik.http.routers.vpn.rule=Host(`vpn.${DOMAINNAME}`)
-        - traefik.http.services.vpn-service.loadbalancer.server.port=943
-        - traefik.http.routers.vpn.middlewares=default-auth
-        - "traefik.enable=true"
+  # openvpn-as:
+  #   image: linuxserver/openvpn-as
+  #   container_name: openvpn-as
+  #   cap_add:
+  #     - NET_ADMIN
+  #   environment:
+  #     - TZ=${TZ}
+  #     - PUID=${PUID}
+  #     - PGID=${PGID}
+  #     - INTERFACE=eth0 #optional
+  #   volumes:
+  #     - openvpn_config:/config
+  #   ports:
+  #     - 1194:1194/udp
+  #   restart: unless-stopped
+  #   networks:
+  #     - traefik
+  #   deploy:
+  #     labels:
+  #       - traefik.http.routers.vpn.rule=Host(`vpn.${DOMAINNAME}`)
+  #       - traefik.http.services.vpn-service.loadbalancer.server.port=943
+  #       - traefik.http.routers.vpn.middlewares=default-auth
+  #       - "traefik.enable=true"
 
 networks:
   traefik:

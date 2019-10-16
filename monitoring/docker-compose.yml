@@ -54,10 +54,11 @@ services:
       - traefik
     deploy:
       labels:
-        - traefik.http.routers.grafana.rule=Host(`grafana.${DOMAINNAME}`)
-        - traefik.http.routers.grafana.middlewares=default-auth
-        - traefik.http.services.grafana-service.loadbalancer.server.port=3000
         - traefik.enable=true
+        - traefik.http.routers.grafana.rule=Host(`grafana.${DOMAINNAME}`)
+        - traefik.http.routers.grafana.entrypoints=https
+        - traefik.http.routers.grafana.tls.certresolver=ovh
+        - traefik.http.services.grafana.loadbalancer.server.port=3000
 
 configs:
   influxdb.conf:
