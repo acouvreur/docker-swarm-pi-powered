@@ -10,6 +10,8 @@
 
 [api]
 
+[ping]
+
 # Entry Points
 [entryPoints]
   # Default HTTP over :80
@@ -50,9 +52,16 @@
 [http.routers]
   # HTTP to HTTPS redirection
   [http.routers.redirs]
-    rule = "hostregexp(`{host:.+}`)"
-    entrypoints = "http"
-    middlewares = "redirect-to-https"
+    rule = "HostRegexp(`{host:.+}`)"
+    entrypoints = ["http"]
+    middlewares = ["redirect-to-https"]
+    service = "noop"
+
+[http.services]
+  # noop service, the URL will be never called
+  [http.services.noop.loadBalancer]
+    [[http.services.noop.loadBalancer.servers]]
+      url = "http://192.168.0.1"
 
 [metrics]
   [metrics.influxDB]
