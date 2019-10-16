@@ -20,6 +20,8 @@ services:
         - traefik.enable=true
         - traefik.http.routers.jackett.rule=Host(`jackett.${DOMAINNAME}`)
         - traefik.http.routers.jackett.entrypoints=https
+        - traefik.http.routers.jackett.tls.domains[0].main=${DOMAINNAME}
+        - traefik.http.routers.jackett.tls.domains[0].sans=*.${DOMAINNAME}
         - traefik.http.routers.jackett.tls.certresolver=ovh
         - traefik.http.services.jackett.loadbalancer.server.port=9117
 
@@ -45,6 +47,8 @@ services:
       labels:
         - traefik.http.routers.transmission.rule=Host(`transmission.${DOMAINNAME}`)
         - traefik.http.routers.transmission.entrypoints=https
+        - traefik.http.routers.transmission.tls.domains[0].main=${DOMAINNAME}
+        - traefik.http.routers.transmission.tls.domains[0].sans=*.${DOMAINNAME}
         - traefik.http.routers.transmission.tls.certresolver=ovh
         - traefik.http.routers.transmission.middlewares=default-auth
         - traefik.http.services.transmission.loadbalancer.server.port=9091
@@ -68,6 +72,8 @@ services:
       labels:
         - traefik.http.routers.sonarr.rule=Host(`sonarr.${DOMAINNAME}`)
         - traefik.http.routers.sonarr.entrypoints=https
+        - traefik.http.routers.sonarr.tls.domains[0].main=${DOMAINNAME}
+        - traefik.http.routers.sonarr.tls.domains[0].sans=*.${DOMAINNAME}
         - traefik.http.routers.sonarr.tls.certresolver=ovh
         - traefik.http.services.sonarr.loadbalancer.server.port=8989
 
@@ -90,6 +96,8 @@ services:
       labels:
         - traefik.http.routers.radarr.rule=Host(`radarr.${DOMAINNAME}`)
         - traefik.http.routers.radarr.entrypoints=https
+        - traefik.http.routers.radarr.tls.domains[0].main=${DOMAINNAME}
+        - traefik.http.routers.radarr.tls.domains[0].sans=*.${DOMAINNAME}
         - traefik.http.routers.radarr.tls.certresolver=ovh
         - traefik.http.services.radarr.loadbalancer.server.port=7878
 

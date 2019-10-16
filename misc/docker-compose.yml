@@ -66,6 +66,8 @@ services:
         - traefik.enable=true
         - traefik.http.routers.my-website.rule=Host(`www.${DOMAINNAME}`)
         - traefik.http.routers.my-website.entrypoints=https
+        - traefik.http.routers.my-website.tls.domains[0].main=${DOMAINNAME}
+        - traefik.http.routers.my-website.tls.domains[0].sans=*.${DOMAINNAME}
         - traefik.http.routers.my-website.tls.certresolver=ovh
         - traefik.http.services.my-website.loadbalancer.server.port=1337
 

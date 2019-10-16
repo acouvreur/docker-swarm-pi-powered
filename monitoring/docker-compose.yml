@@ -57,6 +57,8 @@ services:
         - traefik.enable=true
         - traefik.http.routers.grafana.rule=Host(`grafana.${DOMAINNAME}`)
         - traefik.http.routers.grafana.entrypoints=https
+        - traefik.http.routers.grafana.tls.domains[0].main=${DOMAINNAME}
+        - traefik.http.routers.grafana.tls.domains[0].sans=*.${DOMAINNAME}
         - traefik.http.routers.grafana.tls.certresolver=ovh
         - traefik.http.services.grafana.loadbalancer.server.port=3000
 
