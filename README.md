@@ -2,9 +2,27 @@
 
 ## Architecture
 
-- 1 RPi 4 4GB
-- 2 RPi 3B+ 1GB
-- 1 RPi 3 1GB
+- 1 RPi 4 4GB (Yggdrasil)
+- 2 RPi 3B+ 1GB (Thor & Loki)
+- 1 RPi 3 1GB (Odin)
+
+### Performance tests and consequences
+
+#### Disk speed (USB)
+
+|                            | RPi 4    | RPi 3    |
+| -------------------------- | -------- | -------- |
+| Seq Write Speed (1000 MiB) | 18 MiB/s | 18 MiB/s |
+| Seq Read Speed (1000 MiB)  | 63 MiB/s | 29 MiB/s |
+
+I need high speed between HDD <->
+
+#### Ethernet speed
+
+|          | RPi 4           | RPi 3B+        | RPi3      |
+| -------- | --------------- | -------------- | --------- |
+| Download | 300-740 Mbit/s  | 150-250 Mbit/s | 92 Mbit/s |
+| Upload   | ? 4.10 Mbit/s ? | 140-205 Mbit/s | 87 Mbit/s |
 
 ## Pre-requisites
 

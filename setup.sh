@@ -15,14 +15,14 @@ export TZ="Europe/Paris"
 # export OVH_APPLICATION_KEY=""
 # export OVH_APPLICATION_SECRET=""
 # export OVH_CONSUMER_KEY=""
-export TRAEFIK_NETWORK=traefik
+# export TRAEFIK_NETWORK=traefik
 
 # 1. Init the swarm through the local ipv4 address
 docker swarm init --advertise-addr $(hostname -I | cut -d' ' -f1)
 
 # 2. Create an attachable network so multiple 
 # swarm stack can join it
-docker network create --attachable --driver overlay ${TRAEFIK_NETWORK}
+docker network create --attachable --driver overlay traefik
 
 # 3. Connect nodes to the swarm
 JOIN_TOKEN=$(docker swarm join-token worker | grep token | awk '{ print $5 }')

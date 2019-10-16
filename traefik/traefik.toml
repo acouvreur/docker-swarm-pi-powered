@@ -4,6 +4,9 @@
   # endpoint = "tcp://127.0.0.1:2377"
   endpoint = "unix:///var/run/docker.sock"
   swarmMode = true
+  watch = true
+  exposedbydefault = false
+  network = "traefik"
 
 [api]
 

@@ -74,4 +74,4 @@ volumes:
 networks:
   traefik:
     external: true
-    name: ${TRAEFIK_NETWORK}
+    name: traefik

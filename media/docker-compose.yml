@@ -87,7 +87,7 @@ services:
 networks:
   traefik:
     external: true
-    name: ${TRAEFIK_NETWORK}
+    name: traefik
 
 volumes:
   jackett_data:
