@@ -8,6 +8,8 @@ services:
   traefik:
     hostname: traefik
     image: traefik:latest
+    command:
+      --certificatesresolvers.ovh.acme.dnschallenge=true
     networks:
       - traefik
     ports:
