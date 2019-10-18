@@ -5,25 +5,25 @@ services:
   #-------------------------------------#
   # Jackett : torrent magnets
   #-------------------------------------#
-  jackett:
-    image: "linuxserver/jackett"
-    volumes:
-      - jackett_data:/config
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-    networks:
-      - traefik
-    deploy:
-      labels:
-        - traefik.enable=true
-        - traefik.http.routers.jackett.rule=Host(`jackett.${DOMAINNAME}`)
-        - traefik.http.routers.jackett.entrypoints=https
-        - traefik.http.routers.jackett.tls.domains[0].main=${DOMAINNAME}
-        - traefik.http.routers.jackett.tls.domains[0].sans=*.${DOMAINNAME}
-        - traefik.http.routers.jackett.tls.certresolver=ovh
-        - traefik.http.services.jackett.loadbalancer.server.port=9117
+  # jackett:
+  #   image: "linuxserver/jackett"
+  #   volumes:
+  #     - jackett_data:/config
+  #   environment:
+  #     - PUID=${PUID}
+  #     - PGID=${PGID}
+  #     - TZ=${TZ}
+  #   networks:
+  #     - traefik
+  #   deploy:
+  #     labels:
+  #       - traefik.enable=true
+  #       - traefik.http.routers.jackett.rule=Host(`jackett.${DOMAINNAME}`)
+  #       - traefik.http.routers.jackett.entrypoints=https
+  #       - traefik.http.routers.jackett.tls.domains[0].main=${DOMAINNAME}
+  #       - traefik.http.routers.jackett.tls.domains[0].sans=*.${DOMAINNAME}
+  #       - traefik.http.routers.jackett.tls.certresolver=ovh
+  #       - traefik.http.services.jackett.loadbalancer.server.port=9117
 
   #-------------------------------------#
   # Transmission : torrent manager
@@ -110,10 +110,10 @@ networks:
     name: traefik
 
 volumes:
-  jackett_data:
-    driver: nfs
-    driver_opts:
-      share: ${MASTER_IP}${CONFIGNFS}/media/jackett
+  # jackett_data:
+  #   driver: nfs
+  #   driver_opts:
+  #     share: ${MASTER_IP}${CONFIGNFS}/media/jackett
   transmission_config:
     driver: nfs
     driver_opts:
