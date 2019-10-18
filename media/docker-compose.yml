@@ -46,12 +46,13 @@ services:
     deploy:
       labels:
         - traefik.enable=true
+        - traefik.http.middlewares.default-auth-transmission.basicauth.usersfile=/etc/traefik/.htpasswd
         - traefik.http.routers.transmission.rule=Host(`transmission.${DOMAINNAME}`)
         - traefik.http.routers.transmission.entrypoints=https
         - traefik.http.routers.transmission.tls.domains[0].main=${DOMAINNAME}
         - traefik.http.routers.transmission.tls.domains[0].sans=*.${DOMAINNAME}
         - traefik.http.routers.transmission.tls.certresolver=ovh
-        - traefik.http.routers.transmission.middlewares=default-auth@file
+        - traefik.http.routers.transmission.middlewares=default-auth-transmission
         - traefik.http.services.transmission.loadbalancer.server.port=9091
 
   #-------------------------------------#
