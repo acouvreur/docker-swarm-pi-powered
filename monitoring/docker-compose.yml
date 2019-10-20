@@ -44,7 +44,7 @@ services:
   # Grafana : analytics and monitoring
   #----------------------------------------------#
   grafana:
-    image: "grafana/grafana"
+    image: "grafana/grafana:6.3.4"
     user: ${PUID}
     volumes:
       - grafana_data:/var/lib/grafana
