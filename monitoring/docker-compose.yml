@@ -44,7 +44,8 @@ services:
   # Grafana : analytics and monitoring
   #----------------------------------------------#
   grafana:
-    image: "grafana/grafana"
+    image: "grafana/grafana:6.3.4"
+    user: ${PUID}
     volumes:
       - grafana_data:/var/lib/grafana
     environment:
@@ -57,6 +58,9 @@ services:
         - traefik.enable=true
         - traefik.http.routers.grafana.rule=Host(`grafana.${DOMAINNAME}`)
         - traefik.http.routers.grafana.entrypoints=https
+        - traefik.http.routers.grafana.middlewares=default-headers@file
+        - traefik.http.routers.grafana.tls.domains[0].main=${DOMAINNAME}
+        - traefik.http.routers.grafana.tls.domains[0].sans=*.${DOMAINNAME}
         - traefik.http.routers.grafana.tls.certresolver=ovh
         - traefik.http.services.grafana.loadbalancer.server.port=3000
 

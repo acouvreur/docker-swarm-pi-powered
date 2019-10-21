@@ -1,0 +1,40 @@
+api:
+  dashboard: true
+  debug: true
+
+entryPoints:
+  http:
+    address: ":80"
+  https:
+    address: ":443"
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    swarmMode: true
+    watch: true
+    exposedByDefault: false
+  file:
+    filename: "/etc/traefik/config.yml"
+    watch: true
+
+# Certificate resolver through HTTP Challenge
+# OVH Providers needs these variables :
+#   - OVH_ENDPOINT
+#   - OVH_APPLICATION_KEY
+#   - OVH_APPLICATION_SECRET
+#   - OVH_CONSUMER_KEY
+certificatesResolvers:
+  ovh:
+    acme:
+      email: "alexiscouvreur.pro@gmail.com"
+      storage: "/etc/traefik/acme/acme.json"
+      dnsChallenge:
+        provider: "ovh"
+        delayBeforeCheck: 0
+
+metrics:
+  influxDB:
+    address: "influxdb:8086"
+    protocol: "http"
+    database: "telegraf"
