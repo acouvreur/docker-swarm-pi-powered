@@ -46,13 +46,12 @@ services:
     deploy:
       labels:
         - traefik.enable=true
-        - traefik.http.middlewares.default-auth-transmission.basicauth.usersfile=/etc/traefik/.htpasswd
         - traefik.http.routers.transmission.rule=Host(`transmission.${DOMAINNAME}`)
         - traefik.http.routers.transmission.entrypoints=https
         - traefik.http.routers.transmission.tls.domains[0].main=${DOMAINNAME}
         - traefik.http.routers.transmission.tls.domains[0].sans=*.${DOMAINNAME}
         - traefik.http.routers.transmission.tls.certresolver=ovh
-        - traefik.http.routers.transmission.middlewares=default-auth-transmission
+        - traefik.http.routers.transmission.middlewares=secured@file
         - traefik.http.services.transmission.loadbalancer.server.port=9091
 
   #-------------------------------------#
@@ -75,6 +74,7 @@ services:
         - traefik.enable=true
         - traefik.http.routers.sonarr.rule=Host(`sonarr.${DOMAINNAME}`)
         - traefik.http.routers.sonarr.entrypoints=https
+        - traefik.http.routers.sonarr.middlewares=default-headers@file
         - traefik.http.routers.sonarr.tls.domains[0].main=${DOMAINNAME}
         - traefik.http.routers.sonarr.tls.domains[0].sans=*.${DOMAINNAME}
         - traefik.http.routers.sonarr.tls.certresolver=ovh
@@ -100,6 +100,7 @@ services:
         - traefik.enable=true
         - traefik.http.routers.radarr.rule=Host(`radarr.${DOMAINNAME}`)
         - traefik.http.routers.radarr.entrypoints=https
+        - traefik.http.routers.radarr.middlewares=default-headers@file
         - traefik.http.routers.radarr.tls.domains[0].main=${DOMAINNAME}
         - traefik.http.routers.radarr.tls.domains[0].sans=*.${DOMAINNAME}
         - traefik.http.routers.radarr.tls.certresolver=ovh

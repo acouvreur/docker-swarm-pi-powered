@@ -1,0 +1,40 @@
+http:
+  middlewares:
+    https-redirect:
+      redirectScheme:
+        scheme: https
+
+    default-headers:
+      headers:
+        frameDeny: true
+        sslRedirect: true
+        browserXssFilter: true
+        contentTypeNoSniff: true
+        forceSTSHeader: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+
+    default-auth:
+      basicAuth:
+        usersFile: "/etc/traefik/.htpasswd"
+
+    secured:
+      chain:
+        middlewares:
+          - default-headers
+          - default-auth
+
+  services:
+    noop:
+      loadBalancer:
+        servers:
+        - url: "http://192.168.1.1"
+
+  routers:
+    redirect-to-https:
+      rule: "HostRegexp(`{host:.+}`)"
+      entryPoints:
+        - "http"
+      middlewares:
+        - https-redirect
+      service: "noop"
