@@ -51,7 +51,7 @@ services:
         - traefik.http.routers.transmission.tls.domains[0].main=${DOMAINNAME}
         - traefik.http.routers.transmission.tls.domains[0].sans=*.${DOMAINNAME}
         - traefik.http.routers.transmission.tls.certresolver=ovh
-        - traefik.http.routers.transmission.middlewares=secured@file
+        - traefik.http.routers.transmission.middlewares=default-auth@file
         - traefik.http.services.transmission.loadbalancer.server.port=9091
 
   #-------------------------------------#
