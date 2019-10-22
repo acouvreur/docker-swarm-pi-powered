@@ -13,6 +13,7 @@ services:
       - traefik
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /:/hostfs:ro
       - /sys:/hostfs/sys:ro
       - /proc:/hostfs/proc:ro
       - /etc:/hostfs/etc:ro
