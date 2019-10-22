@@ -30,8 +30,6 @@ services:
   #-------------------------------------#
   transmission-vpn:
     image: linuxserver/transmission
-    ports:
-      - "51413:51413/udp"
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - transmission_config:/config
