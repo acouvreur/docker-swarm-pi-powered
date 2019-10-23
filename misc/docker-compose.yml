@@ -15,7 +15,7 @@ services:
       - pihole_data:/etc/pihole
       - pihole_dnsmasq:/etc/dnsmasq.d
     networks:
-      - traefik_proxy_swarm
+      - traefik
     dns:
       - 127.0.0.1
       - 9.9.9.9
