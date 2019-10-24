@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.7"
 services:
     gateway:
         image: openfaas/gateway:0.17.3-armhf
@@ -36,14 +36,14 @@ services:
                 constraints:
                     - "node.platform.os == linux"
             labels:
-              - traefik.enable=true
-              - traefik.http.routers.faas.rule=Host(`faas.${DOMAINNAME}`)
-              - traefik.http.routers.faas.entrypoints=https
-              - traefik.http.routers.faas.middlewares=default-headers@file
-              - traefik.http.routers.faas.tls.domains[0].main=${DOMAINNAME}
-              - traefik.http.routers.faas.tls.domains[0].sans=*.${DOMAINNAME}
-              - traefik.http.routers.faas.tls.certresolver=ovh
-              - traefik.http.services.faas.loadbalancer.server.port=8080
+                - traefik.enable=true
+                - traefik.http.routers.faas.rule=Host(`faas.${DOMAINNAME}`)
+                - traefik.http.routers.faas.entrypoints=https
+                - traefik.http.routers.faas.middlewares=default-headers@file
+                - traefik.http.routers.faas.tls.domains[0].main=${DOMAINNAME}
+                - traefik.http.routers.faas.tls.domains[0].sans=*.${DOMAINNAME}
+                - traefik.http.routers.faas.tls.certresolver=ovh
+                - traefik.http.services.faas.loadbalancer.server.port=8080
         secrets:
             - basic-auth-user
             - basic-auth-password
