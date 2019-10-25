@@ -1,2 +1,3 @@
 **/.htpasswd
 **/acme.json
+node_modules

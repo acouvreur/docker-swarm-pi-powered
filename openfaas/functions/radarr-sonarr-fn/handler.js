@@ -1,6 +1,7 @@
 "use strict"
 
 const get = require('lodash/get')
+const http = require('http')
 
 const DASHBOARD_ID = process.env.DASHBOARD_ID
 const PANEL_ID = process.env.PANEL_ID
@@ -22,15 +23,15 @@ const EVENT_UPGRADE = 'Upgrade'
 
 // Radarr
 const getMovieMessage = event => {
-    const { eventType, movie, release } = event
+    const { eventType, movie, movieFile } = event
 
     let message = `Radarr: `
     switch (eventType) {
         case EVENT_DOWNLOAD:
-            message += `${movie.title} is ready to watch in ${release.quality}`
+            message += `${movie.title} is ready to watch in ${movieFile.quality}`
             break
         case EVENT_UPGRADE:
-            message += `${movie.title} has upgraded to ${release.quality}`
+            message += `${movie.title} has upgraded to ${movieFile.quality}`
             break
         default:
             message += `Message for '${eventType}' event is not defined`
@@ -160,4 +161,3 @@ module.exports = (context, callback) => {
         callback(err, undefined);
     })
 }
-
