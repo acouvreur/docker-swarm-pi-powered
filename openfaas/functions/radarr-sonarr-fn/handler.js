@@ -125,6 +125,7 @@ const notifyGrafana = annotation => {
 
 module.exports = (context, callback) => {
 
+    context = JSON.parse(context)
     console.log('Function called', context)
     const eventType = get(context, 'eventType', null)
 

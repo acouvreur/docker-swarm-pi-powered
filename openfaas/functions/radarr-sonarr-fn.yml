@@ -8,6 +8,7 @@ functions:
     handler: ./radarr-sonarr-fn
     image: acouvreur/radarr-sonarr-fn:latest
     environment:
+      write_debug: true
       GRAFANA_URL: http://grafana
       GRAFANA_PORT: 3000
       DASHBOARD_ID: sF7d-FHZz
