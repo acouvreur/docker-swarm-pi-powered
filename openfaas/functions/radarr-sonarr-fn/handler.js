@@ -116,7 +116,7 @@ const notifyGrafana = annotation => {
                 })
         })
 
-        request.write(annotation)
+        request.write(JSON.stringify(annotation))
         request.end()
 
     })
