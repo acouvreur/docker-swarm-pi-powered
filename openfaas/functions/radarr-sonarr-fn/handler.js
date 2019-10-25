@@ -124,8 +124,8 @@ const notifyGrafana = annotation => {
 
 module.exports = (context, callback) => {
 
+    console.log('Function called', context)
     const eventType = get(context, 'eventType', null)
-    console.log('Function called')
 
     if (eventType === null) {
         callback({ error: "eventType is not defined. Received " + context }, undefined)
