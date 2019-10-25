@@ -12,7 +12,7 @@ functions:
       GRAFANA_URL: grafana
       GRAFANA_PORT: 3000
       GRAFANA_SECRET_NAME: grafana_api_token
-      DASHBOARD_ID: sF7d-FHZz
+      DASHBOARD_ID: 3
       PANEL_ID: 62014
     secrets:
     - grafana_api_token
