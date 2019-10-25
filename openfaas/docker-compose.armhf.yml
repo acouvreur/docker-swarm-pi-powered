@@ -187,6 +187,15 @@ services:
                     memory: 500M
                 reservations:
                     memory: 200M
+            labels:
+                - traefik.enable=true
+                - traefik.http.routers.prometheus.rule=Host(`prometheus.${DOMAINNAME}`)
+                - traefik.http.routers.prometheus.entrypoints=https
+                - traefik.http.routers.prometheus.middlewares=secured@file
+                - traefik.http.routers.prometheus.tls.domains[0].main=${DOMAINNAME}
+                - traefik.http.routers.prometheus.tls.domains[0].sans=*.${DOMAINNAME}
+                - traefik.http.routers.prometheus.tls.certresolver=ovh
+                - traefik.http.services.prometheus.loadbalancer.server.port=9090
 
     alertmanager:
         image: prom/alertmanager:v0.18.0
@@ -211,6 +220,15 @@ services:
                 constraints:
                     - "node.role == manager"
                     - "node.platform.os == linux"
+            labels:
+                - traefik.enable=true
+                - traefik.http.routers.alertmanager.rule=Host(`alertmanager.${DOMAINNAME}`)
+                - traefik.http.routers.alertmanager.entrypoints=https
+                - traefik.http.routers.alertmanager.middlewares=secured@file
+                - traefik.http.routers.alertmanager.tls.domains[0].main=${DOMAINNAME}
+                - traefik.http.routers.alertmanager.tls.domains[0].sans=*.${DOMAINNAME}
+                - traefik.http.routers.alertmanager.tls.certresolver=ovh
+                - traefik.http.services.alertmanager.loadbalancer.server.port=9093
         configs:
             - source: alertmanager_config
               target: /alertmanager.yml
