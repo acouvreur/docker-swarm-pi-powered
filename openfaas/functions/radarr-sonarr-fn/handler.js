@@ -88,7 +88,7 @@ const notifyGrafana = annotation => {
         "headers": {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "Authorization:":  "Bearer" + GRAFANA_API_KEY
+            "Authorization":  "Bearer" + GRAFANA_API_KEY
         }
     }
 
