@@ -4,8 +4,8 @@ const get = require('lodash/get')
 const http = require('http')
 const fs = require('fs');
 
-const DASHBOARD_ID = process.env.DASHBOARD_ID
-const PANEL_ID = process.env.PANEL_ID
+const DASHBOARD_ID = parseInt(process.env.DASHBOARD_ID)
+const PANEL_ID = parseInt(process.env.PANEL_ID)
 const GRAFANA_URL = process.env.GRAFANA_URL
 const GRAFANA_PORT = process.env.GRAFANA_PORT
 const GRAFANA_API_KEY = fs.readFileSync("/var/openfaas/secrets/" + process.env.GRAFANA_SECRET_NAME, 'utf8')
