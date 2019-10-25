@@ -134,7 +134,7 @@ module.exports = (context, callback) => {
 
     if (eventType === null) {
         callback({ error: "eventType is not defined. Received " + context }, undefined)
-        process.exit(1)
+        return
     }
 
     // Check if we're parsing a Radarr or Sonarr event
