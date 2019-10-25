@@ -110,7 +110,7 @@ const notifyGrafana = annotation => {
                     }
                 })
 
-                req.on('error', (error) => {
+                res.on('error', (error) => {
                     console.error("Got an error:" + error)
                     reject(error)
                 })
