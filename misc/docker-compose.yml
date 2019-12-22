@@ -111,7 +111,7 @@ services:
         - traefik.http.routers.home-assistant.tls.domains[0].sans=*.${DOMAINNAME}
         - traefik.http.routers.home-assistant.tls.certresolver=ovh
         - traefik.http.routers.home-assistant.middlewares=default-auth@file
-        - traefik.http.services.home-assistant.loadbalancer.server.port=80
+        - traefik.http.services.home-assistant.loadbalancer.server.port=8123
 
 networks:
   traefik:
