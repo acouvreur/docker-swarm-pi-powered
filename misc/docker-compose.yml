@@ -94,7 +94,7 @@ services:
   #       - traefik.http.routers.vpn.middlewares=default-auth
   #       - "traefik.enable=true"
 
-homeassistant:
+  homeassistant:
     image: homeassistant/home-assistant:latest
     environment:
       - TZ=${TZ}
