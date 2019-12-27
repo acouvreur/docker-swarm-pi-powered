@@ -1,40 +1,6 @@
 version: "3.7"
 
 services:
-
-  #----------------------------------------------#
-  # Pi-hole : dns wide blocking ads
-  #----------------------------------------------#
-  # pihole:
-  #   hostname: pihole
-  #   image: pihole/pihole:latest
-  #   ports:
-  #     - '53:53/tcp'
-  #     - '53:53/udp'
-  #   volumes:
-  #     - pihole_data:/etc/pihole
-  #     - pihole_dnsmasq:/etc/dnsmasq.d
-  #   networks:
-  #     - traefik
-  #   dns:
-  #     - 127.0.0.1
-  #     - 9.9.9.9
-  #   environment:
-  #     - VIRTUAL_HOST=pihole.${DOMAINNAME}
-  #     - VIRTUAL_PORT=80
-  #     - TZ=${TZ}
-  #   deploy:
-  #     labels:
-  #       - traefik.enable=true
-  #       - traefik.http.routers.pihole.rule=Host(`pihole.${DOMAINNAME}`)
-  #       - traefik.http.routers.pihole.entrypoints=https
-  #       - traefik.http.routers.pihole.tls.domains[0].main=${DOMAINNAME}
-  #       - traefik.http.routers.pihole.tls.domains[0].sans=*.${DOMAINNAME}
-  #       - traefik.http.routers.pihole.tls.certresolver=ovh
-  #       - traefik.http.routers.pihole.middlewares=default-auth@file
-  #       - traefik.http.services.pihole.loadbalancer.server.port=80
-
-
   #--------------------------#
   # Personal website
   #--------------------------#
@@ -122,11 +88,3 @@ volumes:
     driver: nfs
     driver_opts:
       share: ${MASTER_IP}${CONFIGNFS}/misc/homeassistant/data
-  pihole_data:
-    driver: nfs
-    driver_opts:
-      share: ${MASTER_IP}${CONFIGNFS}/misc/pihole/data
-  pihole_dnsmasq:
-    driver: nfs
-    driver_opts:
-      share: ${MASTER_IP}${CONFIGNFS}/misc/pihole/dnsmasq
