@@ -25,6 +25,7 @@ services:
       - portainer_data:/data
     networks:
       - agent_network
+      - traefik
     deploy:
       mode: replicated
       replicas: 1
@@ -43,6 +44,10 @@ networks:
   agent_network:
     driver: overlay
     attachable: true
+  traefik:
+    external: true
+    name: traefik
+  
 
 volumes:
   portainer_data:
