@@ -60,23 +60,23 @@ services:
   #       - traefik.http.routers.vpn.middlewares=default-auth
   #       - "traefik.enable=true"
 
-  homeassistant:
-    image: homeassistant/home-assistant:latest
-    environment:
-      - TZ=${TZ}
-    networks:
-      - traefik
-    volumes:
-      - homeassistant_data:/config
-    deploy:
-      labels:
-        - traefik.enable=true
-        - traefik.http.routers.home-assistant.rule=Host(`home-assistant.${DOMAINNAME}`)
-        - traefik.http.routers.home-assistant.entrypoints=https
-        - traefik.http.routers.home-assistant.tls.domains[0].main=${DOMAINNAME}
-        - traefik.http.routers.home-assistant.tls.domains[0].sans=*.${DOMAINNAME}
-        - traefik.http.routers.home-assistant.tls.certresolver=ovh
-        - traefik.http.services.home-assistant.loadbalancer.server.port=8123
+  # homeassistant:
+  #  image: homeassistant/home-assistant:latest
+  #   environment:
+  #     - TZ=${TZ}
+  #   networks:
+  #     - traefik
+  #   volumes:
+  #     - homeassistant_data:/config
+  #   deploy:
+  #     labels:
+  #       - traefik.enable=true
+  #       - traefik.http.routers.home-assistant.rule=Host(`home-assistant.${DOMAINNAME}`)
+  #       - traefik.http.routers.home-assistant.entrypoints=https
+  #       - traefik.http.routers.home-assistant.tls.domains[0].main=${DOMAINNAME}
+  #       - traefik.http.routers.home-assistant.tls.domains[0].sans=*.${DOMAINNAME}
+  #       - traefik.http.routers.home-assistant.tls.certresolver=ovh
+  #       - traefik.http.services.home-assistant.loadbalancer.server.port=8123
 
 networks:
   traefik:
