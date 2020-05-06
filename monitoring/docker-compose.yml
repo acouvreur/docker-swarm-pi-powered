@@ -55,12 +55,22 @@ services:
     user: ${PUID}
     volumes:
       - grafana_data:/var/lib/grafana
+    configs:
+      - source: grafana.ini
+        target: /etc/grafana/grafana.ini
     environment:
       - TZ=${TZ}
       - GF_SERVER_ROOT_URL=https://grafana.${DOMAINNAME}/
       - GF_INSTALL_PLUGINS=grafana-piechart-panel,grafana-worldmap-panel
+      - SMTP_EMAIL
+      - SMTP_PASSWORD
     networks:
       - traefik
+    healthcheck:
+      test: "wget -q -Y off http://localhost:3000/api/health -O /dev/null > /dev/null 2>&1"
+      interval: 25s
+      timeout: 3s
+      start_period: 30s
     deploy:
       labels:
         - traefik.enable=true
@@ -77,6 +87,8 @@ configs:
     file: ./influxdb/influxdb.conf
   telegraf.conf:
     file: ./telegraf/telegraf.conf
+  grafana.ini:
+    file: ./grafana/config.ini
 
 volumes:
   influxdb_data:
