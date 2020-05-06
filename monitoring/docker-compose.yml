@@ -60,7 +60,7 @@ services:
     environment:
       - TZ=${TZ}
       - GF_SERVER_ROOT_URL=https://grafana.${DOMAINNAME}/
-      - GF_INSTALL_PLUGINS=grafana-piechart-panel,grafana-worldmap-panel
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel,grafana-worldmap-panel,grafana-image-renderer
       - SMTP_EMAIL
       - SMTP_PASSWORD
     networks:
