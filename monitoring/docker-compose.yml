@@ -38,6 +38,12 @@ services:
     configs:
       - source: influxdb.conf
         target: /etc/influxdb/influxdb.conf
+    deploy:
+      healthcheck:
+        test: "wget -q -Y off http://localhost:8086/metrics -O /dev/null > /dev/null 2>&1"
+        interval: 25s
+        timeout: 3s
+        start_period: 30s
     volumes:
       - influxdb_data:/var/lib/influxdb
 
