@@ -56,7 +56,7 @@ services:
   # Sonarr : tvshow manager
   #-------------------------------------#
   sonarr:
-    image: "linuxserver/sonarr"
+    image: "linuxserver/sonarr:preview"
     volumes:
       - sonarr_config:/config
       - transmission_data:/downloads
