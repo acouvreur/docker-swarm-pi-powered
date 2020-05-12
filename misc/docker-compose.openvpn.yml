@@ -1,0 +1,24 @@
+version: "3.7"
+
+services:
+  openvpn:
+    cap_add:
+      - NET_ADMIN
+    image: kylemanna/openvpn
+    container_name: openvpn
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.tcp.services.openVpn.loadBalancer.server.port=443"
+      - "traefik.tcp.routers.openVpn.rule=HostSNI(`*`)"
+      - "traefik.tcp.routers.openVpn.entrypoints=https"
+    volumes:
+     - ./openvpn:/etc/openvpn
+    restart: always
+
+networks:
+  traefik:
+    external: true
+    name: traefik
+    

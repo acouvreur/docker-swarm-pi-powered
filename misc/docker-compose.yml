@@ -32,34 +32,6 @@ services:
     - DYNHOST_LOGIN
     - DYNHOST_PASSWORD
 
-
-  #---------------------------------------#
-  # Open VPN Server
-  #---------------------------------------#
-  # openvpn-as:
-  #   image: linuxserver/openvpn-as
-  #   container_name: openvpn-as
-  #   cap_add:
-  #     - NET_ADMIN
-  #   environment:
-  #     - TZ=${TZ}
-  #     - PUID=${PUID}
-  #     - PGID=${PGID}
-  #     - INTERFACE=eth0 #optional
-  #   volumes:
-  #     - openvpn_config:/config
-  #   ports:
-  #     - 1194:1194/udp
-  #   restart: unless-stopped
-  #   networks:
-  #     - traefik
-  #   deploy:
-  #     labels:
-  #       - traefik.http.routers.vpn.rule=Host(`vpn.${DOMAINNAME}`)
-  #       - traefik.http.services.vpn-service.loadbalancer.server.port=943
-  #       - traefik.http.routers.vpn.middlewares=default-auth
-  #       - "traefik.enable=true"
-
   # homeassistant:
   #   image: homeassistant/home-assistant:latest
   #   environment:
