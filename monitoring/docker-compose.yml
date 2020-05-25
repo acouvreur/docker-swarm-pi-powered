@@ -50,7 +50,7 @@ services:
   # Grafana : analytics and monitoring
   #----------------------------------------------#
   grafana:
-    image: "grafana/grafana:master"
+    image: "grafana/grafana:7.0.0"
     user: ${PUID}
     volumes:
       - grafana_data:/var/lib/grafana
@@ -60,7 +60,7 @@ services:
     environment:
       - TZ=${TZ}
       - GF_SERVER_ROOT_URL=https://grafana.${DOMAINNAME}/
-      - GF_INSTALL_PLUGINS=grafana-piechart-panel,grafana-worldmap-panel
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel,grafana-worldmap-panel,grafana-clock-panel
       - SMTP_EMAIL
       - SMTP_PASSWORD
     networks:
@@ -80,6 +80,17 @@ services:
         - traefik.http.routers.grafana.tls.domains[0].sans=*.${DOMAINNAME}
         - traefik.http.routers.grafana.tls.certresolver=ovh
         - traefik.http.services.grafana.loadbalancer.server.port=3000
+
+  ssh-log-to-influx:
+    image: acouvreur/ssh-log-to-influx:latest
+    restart: always
+    environment:
+      - INFLUX_URL=influxdb
+      - INFLUX_DB=telegraf
+    networks:
+      - traefik
+    ports:
+      - 7070:7070/tcp
 
 configs:
   influxdb.conf:
