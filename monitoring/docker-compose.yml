@@ -96,7 +96,7 @@ services:
         parallelism: 1
         delay: 10s
         order: start-first
-      failure_action: rollback
+        failure_action: rollback
 
 configs:
   influxdb.conf:
