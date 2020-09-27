@@ -16,8 +16,6 @@ services:
       - "80:80"
       - "443:443"
     environment:
-    # You can pass environment variables from your shell straight through to a service’s containers
-    # with the ‘environment’ key by not giving them a value, just like with docker run -e VARIABLE ...
       - OVH_ENDPOINT
       - OVH_APPLICATION_KEY
       - OVH_APPLICATION_SECRET
@@ -39,6 +37,8 @@ services:
       replicas: 1
       placement:
         constraints: [node.role==manager]
+      update_config:
+        order: stop-first
 
 networks:
   traefik:
